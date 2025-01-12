@@ -1,0 +1,11 @@
+[package]
+name = "pr-conflict-resolver"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+octocrab = "0.32"
+git2 = "0.18"
+tokio = { version = "1.35", features = ["full"] }
+dirs = "5.0"
+serde = { version = "1.0", features = ["derive"] }
