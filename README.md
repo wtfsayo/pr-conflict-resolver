@@ -101,7 +101,7 @@ Contributions are welcome! Feel free to:
 
 ## 📄 License
 
-[Add your chosen license here]
+MIT
 
 ---
 
