@@ -33,8 +33,8 @@ BASE_BRANCH=target_branch  # Optional, defaults to "develop"
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/pr-manager.git
-   cd pr-manager
+   git clone https://github.com/wtfsayo/pr-conflict-resolver.git
+   cd pr-conflict-resolver
    ```
 
 2. Build the project:
@@ -46,18 +46,34 @@ BASE_BRANCH=target_branch  # Optional, defaults to "develop"
 
 ### Basic Command
 ```bash
-./pr-manager <pr_number> [--no-interactive]
+cargo run <pr_number> [--no-interactive]
+# or after building:
+./target/release/pr-conflict-resolver <pr_number> [--no-interactive]
+```
+
+### Required Environment Variables
+```bash
+GITHUB_TOKEN=your_github_personal_access_token
+REPO_OWNER=owner_username
+REPO_NAME=repository_name
+```
+
+### Optional Environment Variables
+```bash
+BASE_BRANCH=target_branch  # Defaults to "develop"
 ```
 
 ### Arguments
-| Argument | Description |
-|----------|-------------|
-| `pr_number` | The number of the PR you want to repost |
-| `--no-interactive` | (Optional) Run without interactive prompts |
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `pr_number` | The number of the PR you want to repost | Yes |
+| `--no-interactive` | Run without interactive prompts | No |
 
 ### Example
 ```bash
-./pr-manager 123
+cargo run 123
+# or
+./target/release/pr-conflict-resolver 123 --no-interactive
 ```
 
 ## 🔄 Process Flow
