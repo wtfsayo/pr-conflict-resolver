@@ -1,6 +1,6 @@
 [package]
 name = "pr-conflict-resolver"
-version = "0.1.5"
+version = "0.1.7"
 edition = "2021"
 description = "A tool to efficiently manage and repost GitHub Pull Requests"
 authors = ["Sayo hi@sayo.wtf"]

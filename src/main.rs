@@ -66,9 +66,20 @@ fn main() -> Result<(), Box<dyn Error>> {
                 "Could not checkout '{}'. Creating new branch '{}' from '{}'.",
                 pr_branch, fork_branch, pr_branch
             );
-            // fetch the remote reference just in case
-            run_command("git", &["fetch", "origin", &format!("refs/heads/{}:{}", pr_branch, pr_branch)])?;
-            run_command("git", &["checkout", "-b", &fork_branch, &pr_branch])?;
+            // fetch the remote reference using the correct GitHub PR reference format
+            run_command(
+                "git",
+                &[
+                    "fetch",
+                    "origin",
+                    &format!("refs/pull/{}/head:refs/remotes/origin/pr/{}", pr_number, pr_number),
+                ],
+            )?;
+            // Create and checkout the fork branch from the fetched PR
+            run_command(
+                "git",
+                &["checkout", "-b", &fork_branch, &format!("origin/pr/{}", pr_number)],
+            )?;
         }
     }
 
