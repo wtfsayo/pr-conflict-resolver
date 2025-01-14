@@ -1,11 +1,17 @@
 [package]
 name = "pr-conflict-resolver"
-version = "0.1.0"
+version = "0.1.7"
 edition = "2021"
+description = "A tool to efficiently manage and repost GitHub Pull Requests"
+authors = ["Sayo hi@sayo.wtf"]
+license = "MIT"
+repository = "https://github.com/wtfsayo/pr-conflict-resolver"
+readme = "README.md"
+keywords = ["github", "pull-request", "cli", "git"]
+categories = ["command-line-utilities", "development-tools"]
+
+[[bin]]
+name = "pr-resolver"
+path = "src/main.rs"
 
 [dependencies]
-octocrab = "0.32"
-git2 = "0.18"
-tokio = { version = "1.35", features = ["full"] }
-dirs = "5.0"
-serde = { version = "1.0", features = ["derive"] }

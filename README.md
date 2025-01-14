@@ -1,13 +1,14 @@
-# 🔄 PR Manager Tool
+# 🔄 PR Conflict Resolver
 
-> A Rust implementation of [pr-conflict-resolver](https://github.com/xR0am/pr-conflict-resolver), designed to efficiently manage and repost GitHub Pull Requests.
+A simple Rust tool to help manage Git pull requests and resolve merge conflicts with the develop branch.
 
 ## ✨ Features
 
-- 🔄 Clones PR repositories (including forks)
-- 🔀 Automatically merges base branch
-- 📝 Creates a new PR with reference to the original
-- 🏷️ Maintains PR title, description, and attribution
+- 🔄 Automatically checks out PR branches
+- 🔀 Merges develop branch automatically
+- 📦 Handles package management (pnpm)
+- 🛠️ Creates fork branches when needed
+- 🔧 Configurable with command-line options
 
 ## 📋 Prerequisites
 
@@ -15,25 +16,14 @@ Before using this tool, ensure you have:
 
 - ⚙️ Rust installed on your system
 - 🌿 Git installed and configured
-- 🔑 A GitHub personal access token with appropriate permissions
+- 📦 pnpm installed
 - 📂 Access to the target repository
 
-## 🔧 Environment Variables
-
-Set the following environment variables:
-
-```bash
-GITHUB_TOKEN=your_github_personal_access_token
-REPO_OWNER=owner_username
-REPO_NAME=repository_name
-BASE_BRANCH=target_branch  # Optional, defaults to "develop"
-```
-
-## 📥 Installation
+## 🔧 Installation
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/wtfsayo/pr-conflict-resolver.git
+   git clone https://github.com/your-username/pr-conflict-resolver.git
    cd pr-conflict-resolver
    ```
 
@@ -46,50 +36,46 @@ BASE_BRANCH=target_branch  # Optional, defaults to "develop"
 
 ### Basic Command
 ```bash
-cargo run <pr_number> [--no-interactive]
-# or after building:
-./target/release/pr-conflict-resolver <pr_number> [--no-interactive]
-```
-
-### Required Environment Variables
-```bash
-GITHUB_TOKEN=your_github_personal_access_token
-REPO_OWNER=owner_username
-REPO_NAME=repository_name
-```
-
-### Optional Environment Variables
-```bash
-BASE_BRANCH=target_branch  # Defaults to "develop"
+pr-resolver <pr_number> [--no-interactive] [--work-dir <path>]
 ```
 
 ### Arguments
 | Argument | Description | Required |
 |----------|-------------|----------|
-| `pr_number` | The number of the PR you want to repost | Yes |
+| `pr_number` | The number of the PR you want to work with | Yes |
 | `--no-interactive` | Run without interactive prompts | No |
+| `--work-dir` | Specify a custom working directory | No |
 
-### Example
+### Examples
 ```bash
-cargo run 123
-# or
-./target/release/pr-conflict-resolver 123 --no-interactive
+# Basic usage
+pr-resolver 123
+
+# Non-interactive mode
+pr-resolver 123 --no-interactive
+
+# With custom working directory
+pr-resolver 123 --work-dir /path/to/work/dir
 ```
 
 ## 🔄 Process Flow
 
-1. Clones the repository containing the PR
-2. Creates a new branch named `pr{number}_fix`
-3. Merges the base branch into the new branch
-4. Creates a new PR with:
-   - Original title prefixed with "[Repost]"
-   - Original description
-   - Reference to original PR and author
+1. Attempts to check out the PR branch directly (`pull/{number}/head`)
+2. If checkout fails:
+   - Creates a new branch named `pr{number}_fork`
+   - Fetches the PR branch
+   - Checks out the new fork branch
+3. Merges the develop branch into the current branch
+4. Runs `pnpm clean` and `pnpm install --no-frozen-lockfile`
 
 ## ⚠️ Error Handling
 
-- 🔄 Merge conflicts will trigger a notification requiring manual intervention
-- 🌐 Network and permission errors are reported with descriptive messages
+The tool handles various scenarios:
+
+- 🔄 Git command failures
+- 📦 Package management errors
+- ⌨️ Invalid command-line arguments
+- 🔧 Missing required parameters
 
 ## 🤝 Contributing
 
@@ -105,4 +91,4 @@ MIT
 
 ---
 
-*This project is a Rust implementation of [pr-conflict-resolver](https://github.com/xR0am/pr-conflict-resolver)*
+*A tool for managing pull requests and resolving merge conflicts*
